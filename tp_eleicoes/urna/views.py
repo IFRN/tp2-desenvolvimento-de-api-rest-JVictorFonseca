@@ -42,6 +42,7 @@ class RegistroVotacaoViewSet(viewsets.ReadOnlyModelViewSet):
     ordering = ['-data_hora']
 
 class VotoViewSet(viewsets.ReadOnlyModelViewSet):
+    # ReadOnlyModelViewSet garante que não terá operações de escrita (POST/PUT/DELETE)
     queryset = Voto.objects.all()
     serializer_class = VotoSerializer
     filter_backends = [DjangoFilterBackend]
@@ -55,7 +56,7 @@ class EleicaoViewSet(viewsets.ModelViewSet):
     search_fields = ['titulo']
     ordering_fields = ['data_inicio']
 
-    # --- Q05: GESTÃO DO CICLO DA ELEIÇÃO ---
+    # --- GESTAO DO CICLO DA ELEICAO ---
     @action(detail=True, methods=['post'])
     def abrir(self, request, pk=None):
         eleicao = self.get_object()
@@ -93,7 +94,7 @@ class EleicaoViewSet(viewsets.ModelViewSet):
             
         return Response({'total_cadastrados': criados})
 
-    # --- Q04: VOTAÇÃO (SIGILO E COMPROVANTE) ---
+    # --- VOTACAO (SIGILO E COMPROVANTE) ---
     @action(detail=True, methods=['post'])
     def votar(self, request, pk=None):
         data = request.data.copy()
@@ -136,7 +137,7 @@ class EleicaoViewSet(viewsets.ModelViewSet):
             }
         }, status=status.HTTP_201_CREATED)
 
-    # --- Q05: RELATÓRIOS E APURAÇÃO ---
+    # --- RELATORIOS E APURACAO ---
     @action(detail=True, methods=['get'])
     def apuracao(self, request, pk=None):
         eleicao = self.get_object()
