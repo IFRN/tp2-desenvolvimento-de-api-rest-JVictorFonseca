@@ -1,0 +1,41 @@
+@base = http://localhost:8000/eleicoes_api
+@contentType = application/json
+
+### 1. Criar Eleitor
+POST {{base}}/eleitores/
+Content-Type: {{contentType}}
+
+{
+    "nome": "João Silva",
+    "email": "joao@email.com",
+    "cpf": "111.222.333-44",
+    "data_nascimento": "1990-01-01"
+}
+
+### 2. Criar Eleição (rascunho)
+POST {{base}}/eleicoes/
+Content-Type: {{contentType}}
+
+{
+    "titulo": "Eleição DA 2026",
+    "tipo": "estudantil",
+    "data_inicio": "2026-05-01T08:00:00Z",
+    "data_fim": "2026-05-30T17:00:00Z",
+    "criada_por": 1
+}
+
+### 3. Abrir Eleição
+POST {{base}}/eleicoes/1/abrir/
+Content-Type: {{contentType}}
+
+### 4. Votar
+POST {{base}}/eleicoes/1/votar/
+Content-Type: {{contentType}}
+
+{
+    "eleitor_id": 1,
+    "candidato_id": 1
+}
+
+### 5. Apuração
+GET {{base}}/eleicoes/1/apuracao/
